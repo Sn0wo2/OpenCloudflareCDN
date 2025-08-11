@@ -1,0 +1,65 @@
+name: React CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Frontend/**'
+      - '.github/workflows/react.yml'
+  pull_request:
+    paths:
+      - 'Frontend/**'
+      - '.github/workflows/react.yml'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: Frontend
+
+jobs:
+  lint-build:
+    name: Lint Auto-fix, Build and Update Dependencies
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESLint with auto-fix
+        run: pnpm run lint:fix
+
+      - name: Build project
+        run: pnpm run build
+
+      - name: Check for file changes
+        id: git-check
+        working-directory: .
+        run: |
+          if git diff --exit-code; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request with lint fixes
+        if: steps.git-check.outputs.changed == 'true' && github.ref == 'refs/heads/main'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore(frontend): fix lint issues & update dependencies"
+          title: "chore(frontend): fix lint issues & update dependencies"
+          body: "The `ESLint` action wants to apply these fixes & updates."
+          branch: "chore/es-lint-fixes"
+          base: main
+          signoff: true
+          sign-commits: true

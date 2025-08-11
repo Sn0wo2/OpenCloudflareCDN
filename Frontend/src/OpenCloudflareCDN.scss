@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  color: #313131;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 100vh;
+  background-color: #222;
+  color: #d9d9d9;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+a {
+  transition: color 150ms ease;
+  background-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+  color: #fff;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #ee730a;
+}
+
+.main-wrapper {
+  flex: 1 0 auto;
+}
+
+.main-content {
+  margin: 8rem auto;
+  padding: 0 1.5rem;
+  width: 100%;
+  max-width: 60rem;
+}
+
+.h1 {
+  line-height: 3.75rem;
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+.h2 {
+  line-height: 2.25rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.core-msg {
+  line-height: 2.25rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.spacer-bottom {
+  margin-bottom: 2rem;
+}
+
+.spacer-top {
+  margin-top: 2rem;
+}
+
+.footer {
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+  max-width: 60rem;
+  line-height: 1.125rem;
+  font-size: .75rem;
+}
+
+.footer-inner {
+  border-top: 1px solid #d9d9d9;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.ray-id {
+  margin-bottom: .5rem;
+}
+
+.ray-id code {
+  font-family: monaco, courier, monospace;
+}
+
+.core-msg, .zone-name-title {
+  overflow-wrap: break-word;
+}
+
+.text-center {
+  text-align: center;
+}
+
+#challenge-success-text {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDI2IDI2Ij48cGF0aCBmaWxsPSIjZDlkOWQ5IiBkPSJNMTMgMGExMyAxMyAwIDEgMCAwIDI2IDEzIDEzIDAgMCAwIDAtMjZtMCAyNGExMSAxMSAwIDEgMSAwLTIyIDExIDExIDAgMCAxIDAgMjIiLz48cGF0aCBmaWxsPSIjZDlkOWQ5IiBkPSJtMTAuOTU1IDE2LjA1NS0zLjk1LTQuMTI1LTEuNDQ1IDEuMzg1IDUuMzcgNS42MSA5LjQ5NS05LjYtMS40Mi0xLjQwNXoiLz48L3N2Zz4=");
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding-left: 42px;
+  margin-bottom: 1rem;
+}
+
+@media (width <= 720px) {
+  .main-content {
+    margin-top: 4rem;
+  }
+
+  .h1 {
+    line-height: 1.75rem;
+    font-size: 1.5rem;
+  }
+
+  .h2 {
+    line-height: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .core-msg {
+    line-height: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .zone-name-title {
+    margin-bottom: 1rem;
+  }
+}

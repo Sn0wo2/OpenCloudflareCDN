@@ -1,0 +1,13 @@
+log:
+    level: debug
+    dir: ./logs
+server:
+    address: :3000
+    header: OpenCloudflareCDN
+    tls:
+        cert: ""
+        key: ""
+OriginalServer: https://www.cloudflare.com.cn
+turnstileSecretKey: "0x4AAAAAABqLUPs9kpv4wcPb03L9GZOfHxI"
+jwtSecret: your-super-secret-and-long-key
+staticPath: ./static

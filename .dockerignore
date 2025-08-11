@@ -1,0 +1,16 @@
+    .git
+.gitignore
+.gitattributes
+
+.dockerignore
+Dockerfile
+
+dist/
+
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+Frontend/node_modules

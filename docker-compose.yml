@@ -1,0 +1,9 @@
+services:
+  QuickNote:
+    image: ghcr.io/sn0wo2/opencloudflarecdn:latest
+    init: true
+    container_name: opencloudflarecdn
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/opt/opencloudflarecdn/data

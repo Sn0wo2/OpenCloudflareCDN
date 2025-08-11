@@ -1,0 +1,114 @@
+version: 2
+project_name: OpenCloudflareCDN
+
+release:
+  prerelease: auto
+
+builds:
+  - id: OpenCloudflareCDN
+    main: ./cmd
+    binary: OpenCloudflareCDN
+    env:
+      - CGO_ENABLED=0
+      - p=4
+      - GODEBUG=cpu.all=off
+      - GOEXPERIMENT=newinliner
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -mod=readonly
+      - -trimpath
+      - -tags=netgo,osusergo
+      - -buildmode=pie
+    gcflags:
+      - all=-d=ssa/check_bce/debug=0
+      - all=-B
+      - all=-C
+    ldflags:
+      - -s -w
+      - -extldflags=-static,-Wl,-O3
+      - -X github.com/Sn0wo2/OpenCloudflareCDN/version.version={{.Version}}
+      - -X github.com/Sn0wo2/OpenCloudflareCDN/version.commit={{.Commit}}
+      - -X github.com/Sn0wo2/OpenCloudflareCDN/version.date={{.Date}}
+
+archives:
+  - id: default
+    format_overrides:
+      - goos: windows
+        formats: [ 'zip' ]
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - src: ./README.md
+        dst: README.md
+      - src: ./LICENSE
+        dst: LICENSE
+      - src: ./Frontend/static
+        dst: static
+
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    image_templates:
+      - "ghcr.io/sn0wo2/opencloudflarecdn:{{ .Tag }}-amd64"
+    use: buildx
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/amd64"
+
+  - goos: linux
+    goarch: arm64
+    image_templates:
+      - "ghcr.io/sn0wo2/opencloudflarecdn:{{ .Tag }}-arm64"
+    use: buildx
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/arm64/v8"
+
+docker_manifests:
+  - name_template: "ghcr.io/sn0wo2/opencloudflarecdn:{{ .Tag }}"
+    image_templates:
+      - "ghcr.io/sn0wo2/opencloudflarecdn:{{ .Tag }}-amd64"
+      - "ghcr.io/sn0wo2/opencloudflarecdn:{{ .Tag }}-arm64"
+
+  - name_template: "ghcr.io/sn0wo2/opencloudflarecdn:latest"
+    image_templates:
+      - "ghcr.io/sn0wo2/opencloudflarecdn:{{ .Tag }}-amd64"
+      - "ghcr.io/sn0wo2/opencloudflarecdn:{{ .Tag }}-arm64"
+
+changelog:
+  disable: false
+  use: github
+  sort: asc
+  groups:
+    - title: "🚀 Features"
+      regexp: "^.*feat(?:\\([^)]+\\))?:+.*$"
+      order: 0
+    - title: "🐛 Bug Fixes"
+      regexp: "^.*fix(?:\\([^)]+\\))?:+.*$"
+      order: 1
+    - title: "⚡️ Performance Improvements"
+      regexp: "^.*perf(?:\\([^)]+\\))?:+.*$"
+      order: 2
+    - title: "📝 Documentation"
+      regexp: "^.*docs(?:\\([^)]+\\))?:+.*$"
+      order: 3
+    - title: "🔧 Maintenance & Chores"
+      regexp: "^.*chore(?:\\([^)]+\\))?:+.*$"
+      order: 4
+    - title: "♻️ Code Refactoring"
+      regexp: "^.*refactor(?:\\([^)]+\\))?:+.*$"
+      order: 5
+    - title: "🧪 Tests"
+      regexp: "^.*test(?:\\([^)]+\\))?:+.*$"
+      order: 6
+    - title: "📦 Dependency Updates"
+      regexp: "^.*deps(?:\\([^)]+\\))?:+.*$"
+      order: 7
+    - title: "📍 Others"
+      order: 999
