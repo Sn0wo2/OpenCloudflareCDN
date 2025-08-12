@@ -5,12 +5,15 @@ import './util/i18n.ts';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <OpenCloudflareCDN siteKey={import.meta.env.VITE_SITE_KEY} successCallback={async (token) => {
+        <OpenCloudflareCDN siteKey={import.meta.env.VITE_SITE_KEY} successCallback={async (token, rayID) => {
             try {
                 const response = await fetch('/v1/verify', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({turnstileToken: token}),
+                    body: JSON.stringify({
+                        turnstileToken: token,
+                        rayID: rayID
+                    }),
                 });
                 const data = await response.json();
                 if (!data.success) {

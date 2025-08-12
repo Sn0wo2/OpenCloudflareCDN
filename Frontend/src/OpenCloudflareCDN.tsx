@@ -7,7 +7,7 @@ import {genRayID, getRootDomain} from "./util/cloudflare.ts";
 
 interface AppProps {
     siteKey: string | null | undefined;
-    successCallback: (token: string) => Promise<void>;
+    successCallback: (token: string, rayID: string) => Promise<void>;
     rayID: string | null | undefined;
 }
 
@@ -17,9 +17,11 @@ export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
     const [isVerified, setIsVerified] = useState(false);
     const domain = getRootDomain();
 
+    const rid = rayID || genRayID()
+
     const handleSuccess = (token: string) => {
         setIsVerified(true);
-        void successCallback(token);
+        void successCallback(rid, token);
     };
 
     document.title = i18n.t('page_title');
@@ -46,9 +48,6 @@ export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
                                 options={{theme: "dark"}}
                             />
                             <p className="core-msg spacer-top">{t('check_connection', {domain})}</p>
-                            <noscript>
-                                <div className="h2"><span>{t('enable_js')}</span></div>
-                            </noscript>
                         </div>
                     )}
                 </div>
@@ -56,7 +55,7 @@ export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
             <div className="footer" role="contentinfo">
                 <div className="footer-inner">
                     <div className="clearfix diagnostic-wrapper">
-                        <div className="ray-id">{"Ray ID: "}<code>{rayID || genRayID()}</code></div>
+                        <div className="ray-id">{"Ray ID: "}<code>{rid}</code></div>
                     </div>
                     <div className="text-center" id="footer-text">
                         <Trans i18nKey="provided_by">
