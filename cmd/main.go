@@ -13,10 +13,9 @@ import (
 	"github.com/Sn0wo2/OpenCloudflareCDN/log"
 	"github.com/Sn0wo2/OpenCloudflareCDN/router"
 	"github.com/Sn0wo2/OpenCloudflareCDN/version"
-	"go.uber.org/zap"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 )
 
 func init() {

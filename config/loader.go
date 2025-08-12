@@ -30,12 +30,12 @@ type Config struct {
 	IsDefault  bool   `json:"-" optional:"true" yaml:"-"`
 	ConfigPath string `json:"-" optional:"true" yaml:"-"`
 
-	Log                Log    `json:"log"     optional:"true" yaml:"log"`
-	Server             Server `json:"server"  yaml:"server"`
-	StaticPath         string `json:"staticPath" yaml:"staticPath"`
-	OriginalServer     string `json:"OriginalServer" yaml:"OriginalServer"`
+	Log                Log    `json:"log"                optional:"true"           yaml:"log"`
+	Server             Server `json:"server"             yaml:"server"`
+	StaticPath         string `json:"staticPath"         yaml:"staticPath"`
+	OriginalServer     string `json:"OriginalServer"     yaml:"OriginalServer"`
 	TurnstileSecretKey string `json:"turnstileSecretKey" yaml:"turnstileSecretKey"`
-	JWTSecret          string `json:"jwtSecret" yaml:"jwtSecret"`
+	JWTSecret          string `json:"jwtSecret"          yaml:"jwtSecret"`
 }
 
 type Log struct {

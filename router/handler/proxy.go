@@ -14,17 +14,18 @@ func Proxy() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		tokenStr := ctx.Cookies("cfv_c")
 		if tokenStr != "" {
-
 			_, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 				}
+
 				return util.StringToBytes(config.Instance.JWTSecret), nil
 			})
 			if err == nil {
 				return proxyRequest(ctx)
 			}
 		}
+
 		return ctx.Next()
 	}
 }
@@ -32,6 +33,7 @@ func Proxy() fiber.Handler {
 func proxyRequest(ctx *fiber.Ctx) error {
 	req := fasthttp.AcquireRequest()
 	defer fasthttp.ReleaseRequest(req)
+
 	ctx.Request().CopyTo(req)
 
 	req.SetRequestURI(config.Instance.OriginalServer + ctx.OriginalURL())
@@ -47,10 +49,11 @@ func proxyRequest(ctx *fiber.Ctx) error {
 
 	ctx.Status(resp.StatusCode())
 
-	resp.Header.VisitAll(func(k, v []byte) {
+	for k, v := range resp.Header.All() {
 		ctx.Response().Header.SetBytesKV(k, v)
-	})
+	}
 
 	ctx.Response().SetBody(resp.Body())
+
 	return nil
 }

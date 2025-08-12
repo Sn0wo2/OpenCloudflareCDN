@@ -20,7 +20,10 @@ func APIVerify() fiber.Handler {
 		if err != nil {
 			return err
 		}
-		defer resp.Body.Close()
+
+		defer func() {
+			_ = resp.Body.Close()
+		}()
 
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
@@ -41,6 +44,7 @@ func APIVerify() fiber.Handler {
 		if err != nil {
 			return err
 		}
+
 		ctx.Cookie(&fiber.Cookie{
 			Name:     "cfv_c",
 			Value:    tokenStr,
@@ -48,6 +52,7 @@ func APIVerify() fiber.Handler {
 			MaxAge:   int(age.Seconds()),
 			Path:     "/",
 		})
+
 		return response.New("success").Write(ctx)
 	}
 }
