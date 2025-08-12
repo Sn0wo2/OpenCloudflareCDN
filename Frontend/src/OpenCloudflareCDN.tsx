@@ -1,17 +1,17 @@
 import {Turnstile} from "@marsidev/react-turnstile";
-import "./OpenCloudflareCDN.scss"
+import "./OpenCloudflareCDN.scss";
+import i18n from "i18next";
 import {useState} from "react";
+import {Trans, useTranslation} from "react-i18next";
 
 interface AppProps {
-    siteKey: string | undefined;
+    siteKey: string | null | undefined;
     successCallback: (token: string) => Promise<void>;
-    rayID: string | undefined;
+    rayID: string | null | undefined;
 }
 
-function generateCfRayId(): string {
-    const arr = new Uint8Array(8)
-    crypto.getRandomValues(arr)
-    return Array.from(arr).map(b => b.toString(16).padStart(2, "0")).join("")
+function genRayID() {
+    return [...Array(16)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 }
 
 function getRootDomain() {
@@ -21,30 +21,33 @@ function getRootDomain() {
         : window.location.hostname;
 }
 
-
 export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
+    const {t} = useTranslation();
     const sk = siteKey || '1x00000000000000000000AA';
     const [isVerified, setIsVerified] = useState(false);
+    const domain = getRootDomain();
 
     const handleSuccess = (token: string) => {
         setIsVerified(true);
         void successCallback(token);
     };
 
+    document.title = i18n.t('page_title');
+
     return (
         <>
             <div className="main-wrapper" role="main">
                 <div className="main-content">
-                    <h1 className="zone-name-title h1">{getRootDomain()}</h1>
+                    <h1 className="zone-name-title h1">{domain}</h1>
                     {isVerified ? (
                         <div>
-                            <div id="challenge-success-text" className="h2">验证成功</div>
+                            <div id="challenge-success-text" className="h2">{t('success')}</div>
                             <div className="spacer"></div>
-                            <div className="core-msg spacer">正在等待 {getRootDomain()} 响应...</div>
+                            <div className="core-msg spacer">{t('waiting', {domain})}</div>
                         </div>
                     ) : (
                         <div>
-                            <p className="h2 spacer-bottom">正在验证您是否是真人。这可能需要几秒钟时间。</p>
+                            <p className="h2 spacer-bottom">{t('verifying')}</p>
                             <Turnstile
                                 siteKey={sk}
                                 onSuccess={handleSuccess}
@@ -52,9 +55,9 @@ export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
                                 onExpire={() => console.warn('Turnstile expired')}
                                 options={{theme: "dark"}}
                             />
-                            <p className="core-msg spacer-top">{`继续之前，${getRootDomain()}需要先检查您的连接的安全性。`}</p>
+                            <p className="core-msg spacer-top">{t('check_connection', {domain})}</p>
                             <noscript>
-                                <div className="h2"><span>Enable JavaScript and cookies to continue</span></div>
+                                <div className="h2"><span>{t('enable_js')}</span></div>
                             </noscript>
                         </div>
                     )}
@@ -63,14 +66,16 @@ export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
             <div className="footer" role="contentinfo">
                 <div className="footer-inner">
                     <div className="clearfix diagnostic-wrapper">
-                        <div className="ray-id">Ray ID: <code>{rayID || generateCfRayId()}</code></div>
+                        <div className="ray-id">{"Ray ID: "}<code>{rayID || genRayID()}</code></div>
                     </div>
                     <div className="text-center" id="footer-text">
-                        {"性能和安全由"}
-                        <a rel="noopener noreferrer"
-                           href="https://www.cloudflare.com?utm_source=challenge&utm_campaign=m"
-                           target="_blank">Cloudflare</a>
-                        {"提供"}
+                        <Trans i18nKey="provided_by">
+                            Performance & security by  <a
+                            rel="noopener noreferrer"
+                            href="https://github.com/Sn0wo2/OpenCloudflareCDN"
+                            target="_blank"
+                        >OpenCloudflareCDN</a>
+                        </Trans>
                     </div>
                 </div>
             </div>

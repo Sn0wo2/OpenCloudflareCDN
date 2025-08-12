@@ -1,6 +1,7 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {OpenCloudflareCDN} from "./OpenCloudflareCDN.tsx";
+import './i18n';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -18,7 +19,7 @@ createRoot(document.getElementById('root')!).render(
             } catch (err) {
                 console.error(err);
             }
-            window.location.reload()
-        }} rayID={undefined}/>
+            window.location.reload();
+        }} rayID={null}/>
     </StrictMode>,
 )

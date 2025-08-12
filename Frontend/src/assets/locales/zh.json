@@ -1,0 +1,9 @@
+{
+  "page_title": "请稍候...",
+  "verifying": "正在验证您是否是真人。这可能需要几秒钟时间。",
+  "success": "验证成功",
+  "waiting": "正在等待 {{domain}} 响应...",
+  "check_connection": "继续之前，{{domain}}需要先检查您的连接的安全性。",
+  "enable_js": "请启用 JavaScript 和 Cookie 以继续。",
+  "provided_by": "性能和安全由 <1>OpenCloudflareCDN</1> 提供。"
+}

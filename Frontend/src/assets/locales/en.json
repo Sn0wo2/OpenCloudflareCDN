@@ -1,0 +1,9 @@
+{
+  "page_title": "Just a moment...",
+  "verifying": "Verifying you are human. This may take a few seconds.",
+  "success": "Success!",
+  "waiting": "Waiting for {{domain}} to respond...",
+  "check_connection": "Before continuing, {{domain}} needs to check the security of your connection.",
+  "enable_js": "Enable JavaScript and cookies to continue.",
+  "provided_by": "Performance & security by <1>OpenCloudflareCDN</1>"
+}
