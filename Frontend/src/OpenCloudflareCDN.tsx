@@ -3,22 +3,12 @@ import "./OpenCloudflareCDN.scss";
 import i18n from "i18next";
 import {useState} from "react";
 import {Trans, useTranslation} from "react-i18next";
+import {genRayID, getRootDomain} from "./util/cloudflare.ts";
 
 interface AppProps {
     siteKey: string | null | undefined;
     successCallback: (token: string) => Promise<void>;
     rayID: string | null | undefined;
-}
-
-function genRayID() {
-    return [...Array(16)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
-}
-
-function getRootDomain() {
-    const parts = window.location.hostname.split('.');
-    return parts.length > 2
-        ? parts.slice(-2).join('.')
-        : window.location.hostname;
 }
 
 export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {

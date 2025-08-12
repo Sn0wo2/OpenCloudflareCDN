@@ -3,13 +3,12 @@
   "description": "An open-source reverse proxy inspired by Cloudflare, featuring a JavaScript Challenge to block malicious bots, web crawlers, and mitigate CC attacks.",
   "author": "Sn0wo2",
   "license": "MIT",
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "build": "vite build",
     "preview": "vite preview",
+    "lint": "eslint . && tsc -b",
     "lint:fix": "eslint . --fix && tsc -b"
   },
   "repository": {
