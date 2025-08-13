@@ -10,11 +10,8 @@ void i18n
     .init({
         resources: {en: {translation: en}, zh: {translation: zh}},
         fallbackLng: 'en',
-        debug: true,
         detection: {
-            order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
-            caches: ['cookie'],
-        
+            order: ['querystring', 'navigator', 'htmlTag'],
         },
         interpolation: {
             escapeValue: false,
