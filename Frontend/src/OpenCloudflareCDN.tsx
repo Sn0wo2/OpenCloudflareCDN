@@ -1,7 +1,7 @@
-import {Turnstile} from "@marsidev/react-turnstile";
+import {Turnstile, type TurnstileInstance} from "@marsidev/react-turnstile";
 import "./OpenCloudflareCDN.scss";
 import i18n from "i18next";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {genRayID, getRootDomain} from "./util/cloudflare.ts";
 
@@ -11,18 +11,14 @@ interface AppProps {
     rayID: string | null | undefined;
 }
 
+type VerificationStatus = 'verify' | 'success' | 'error' | 'expire';
+
 export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
     const {t} = useTranslation();
-    const sk = siteKey || '1x00000000000000000000AA';
-    const [isVerified, setIsVerified] = useState(false);
+    const [status, setStatus] = useState<VerificationStatus>('verify');
+    const turnstileRef = useRef<TurnstileInstance>(null);
     const domain = getRootDomain();
-
-    const rid = rayID || genRayID()
-
-    const handleSuccess = (token: string) => {
-        setIsVerified(true);
-        void successCallback(rid, token);
-    };
+    const rid = rayID || genRayID();
 
     document.title = i18n.t('page_title');
 
@@ -31,21 +27,39 @@ export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
             <div className="main-wrapper" role="main">
                 <div className="main-content">
                     <h1 className="zone-name-title h1">{domain}</h1>
-                    {isVerified ? (
+                    {status === 'success' ? (
                         <div>
-                            <div id="challenge-success-text" className="h2">{t('success')}</div>
+                            <div id="challenge-success-text" className="h2">{t('challenge_success')}</div>
                             <div className="spacer"></div>
                             <div className="core-msg spacer">{t('waiting', {domain})}</div>
                         </div>
+                    ) : status === 'error' || status === 'expire' ? (
+                        <div>
+                            <div id="challenge-error-text" className="h2">{t(`challenge_${status}`)}</div>
+                            <div className="spacer"></div>
+                            <div className="core-msg spacer">{t(`challenge_${status}_description`)}</div>
+                            <div className="retry-wrapper">
+                                <button className="retry-button" onClick={() => {
+                                    setStatus('verify');
+                                    turnstileRef.current?.reset();
+                                }}>{t('retry')}</button>
+                            </div>
+                        </div>
                     ) : (
                         <div>
-                            <p className="h2 spacer-bottom">{t('verifying')}</p>
+                            <p className="h2 spacer-bottom">{t('verify')}</p>
                             <Turnstile
-                                siteKey={sk}
-                                onSuccess={handleSuccess}
-                                onError={() => console.error('Turnstile error')}
-                                onExpire={() => console.warn('Turnstile expired')}
-                                options={{theme: "dark"}}
+                                ref={turnstileRef}
+                                siteKey={siteKey || '1x00000000000000000000AA'}
+                                onSuccess={(token) => {
+                                    setStatus('success');
+                                    void successCallback(token, rid);
+                                }}
+                                onError={() => setStatus('error')}
+                                onExpire={() => setStatus('expire')}
+                                options={{
+                                    language: i18n.language,
+                                }}
                             />
                             <p className="core-msg spacer-top">{t('check_connection', {domain})}</p>
                         </div>
@@ -55,11 +69,11 @@ export function OpenCloudflareCDN({rayID, siteKey, successCallback}: AppProps) {
             <div className="footer" role="contentinfo">
                 <div className="footer-inner">
                     <div className="clearfix diagnostic-wrapper">
-                        <div className="ray-id">{"Ray ID: "}<code>{rid}</code></div>
+                        <div className="ray-id">Ray ID: <code>{rid}</code></div>
                     </div>
                     <div className="text-center" id="footer-text">
                         <Trans i18nKey="provided_by">
-                            Performance & security by  <a
+                            Performance & security by <a
                             rel="noopener noreferrer"
                             href="https://github.com/Sn0wo2/OpenCloudflareCDN"
                             target="_blank"

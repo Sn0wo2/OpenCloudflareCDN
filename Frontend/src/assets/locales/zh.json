@@ -1,8 +1,13 @@
 {
   "page_title": "请稍候...",
-  "verifying": "正在验证您是否是真人。这可能需要几秒钟时间。",
-  "success": "验证成功",
+  "verify": "正在验证您是否是真人。这可能需要几秒钟时间。",
+  "challenge_success": "验证成功！",
+  "challenge_error": "验证失败",
+  "challenge_expire": "验证已过期",
+  "challenge_error_description": "验证过程中遇到错误，请重试。",
+  "challenge_expire_description": "验证已过期，请重试。",
+  "retry": "重试",
   "waiting": "正在等待 {{domain}} 响应...",
   "check_connection": "继续之前，{{domain}}需要先检查您的连接的安全性。",
-  "provided_by": "性能和安全由 <1>OpenCloudflareCDN</1> 提供。"
+  "provided_by": "性能和安全由<1>OpenCloudflareCDN</1>提供"
 }

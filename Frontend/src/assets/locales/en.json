@@ -1,7 +1,12 @@
 {
   "page_title": "Just a moment...",
-  "verifying": "Verifying you are human. This may take a few seconds.",
-  "success": "Success!",
+  "verify": "Verifying you are human. This may take a few seconds.",
+  "challenge_success": "Success!",
+  "challenge_error": "Verification failed",
+  "challenge_expire": "Verification expired",
+  "challenge_error_description": "The verification process encountered an error. Please try again.",
+  "challenge_expire_description": "The verification has expired. Please try again.",
+  "retry": "Try again",
   "waiting": "Waiting for {{domain}} to respond...",
   "check_connection": "Before continuing, {{domain}} needs to check the security of your connection.",
   "provided_by": "Performance & security by <1>OpenCloudflareCDN</1>"
