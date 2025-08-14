@@ -19,5 +19,16 @@ export default tseslint.config([
             ecmaVersion: 2020,
             globals: globals.browser,
         },
+        rules: {
+            'no-restricted-imports': [
+                'error',
+                {
+                    patterns: [
+                        './*',
+                        '../*'
+                    ]
+                }
+            ]
+        }
     },
 ])

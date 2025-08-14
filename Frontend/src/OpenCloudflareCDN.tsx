@@ -1,9 +1,9 @@
 import {Turnstile, type TurnstileInstance} from "@marsidev/react-turnstile";
-import "./OpenCloudflareCDN.scss";
+import "@/OpenCloudflareCDN.scss";
 import i18n from "i18next";
 import {useRef, useState} from "react";
 import {Trans, useTranslation} from "react-i18next";
-import {genRayID, getRootDomain} from "./util/cloudflare.ts";
+import {genRayID, getRootDomain} from "@/util/cloudflare";
 
 interface AppProps {
     siteKey: string | null | undefined;
