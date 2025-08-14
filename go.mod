@@ -10,7 +10,7 @@ require (
 	github.com/mattn/go-colorable v0.1.14
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/tidwall/gjson v1.18.0
-	github.com/valyala/fasthttp v1.64.0
+	github.com/valyala/fasthttp v1.65.0
 	go.uber.org/zap v1.27.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/yaml.v3 v3.0.1
