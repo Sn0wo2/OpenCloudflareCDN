@@ -13,7 +13,6 @@ import (
 	"github.com/Sn0wo2/OpenCloudflareCDN/log"
 	"github.com/Sn0wo2/OpenCloudflareCDN/router"
 	"github.com/Sn0wo2/OpenCloudflareCDN/version"
-	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 )
@@ -50,15 +49,13 @@ func main() {
 		_ = log.Instance.Sync()
 	}()
 
-	if !fiber.IsChild() {
-		log.Instance.Info("Starting OpenCloudflareCDN...", zap.String("version", version.GetFormatVersion()))
-	}
+	log.Instance.Info("Starting OpenCloudflareCDN...", zap.String("version", version.GetFormatVersion()))
 
 	if config.Instance.IsDefault {
 		log.Instance.Warn("You have not set a configuration file, using the default!", zap.String("path", config.Instance.ConfigPath))
 	}
 
-	app := framework.Fiber()
+	app := framework.Gin()
 
 	router.Init(app)
 
@@ -75,9 +72,5 @@ func main() {
 
 	<-shutdownChan
 
-	if err := app.Shutdown(); err != nil {
-		log.Instance.Error("Server failed to shutdown",
-			zap.Error(err),
-		)
-	}
+	log.Instance.Info("Shutting down server...")
 }

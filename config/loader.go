@@ -22,6 +22,7 @@ var DefaultConfig = &Config{
 		Header:  "OpenCloudflareCDN",
 	},
 	StaticPath:     "./static",
+	StaticIndex:    "index.html",
 	OriginalServer: "https://www.example.com",
 	JWTSecret:      "your-super-secret-and-long-key",
 }
@@ -33,6 +34,7 @@ type Config struct {
 	Log                Log    `json:"log"                optional:"true"           yaml:"log"`
 	Server             Server `json:"server"             yaml:"server"`
 	StaticPath         string `json:"staticPath"         yaml:"staticPath"`
+	StaticIndex        string `json:"staticIndex"        optional:"true"           yaml:"staticIndex"`
 	OriginalServer     string `json:"OriginalServer"     yaml:"OriginalServer"`
 	TurnstileSecretKey string `json:"turnstileSecretKey" yaml:"turnstileSecretKey"`
 	JWTSecret          string `json:"jwtSecret"          yaml:"jwtSecret"`

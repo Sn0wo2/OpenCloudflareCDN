@@ -4,14 +4,14 @@ import (
 	"github.com/Sn0wo2/OpenCloudflareCDN/internal/util"
 	"github.com/Sn0wo2/OpenCloudflareCDN/log"
 	"github.com/Sn0wo2/OpenCloudflareCDN/response"
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-func APIHealth() fiber.Handler {
-	return func(ctx *fiber.Ctx) error {
-		log.Instance.Info("H >> Health", zap.String("ctx", util.FiberContextString(ctx)))
+func APIHealth() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		log.Instance.Info("H >> Health", zap.String("ctx", util.GinContextString(ctx)))
 
-		return response.New("ok").Write(ctx)
+		response.New("ok").Write(ctx)
 	}
 }

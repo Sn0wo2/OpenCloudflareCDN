@@ -1,25 +1,26 @@
 package notfound
 
 import (
+	"net/http"
 	"strings"
 
 	"github.com/Sn0wo2/OpenCloudflareCDN/internal/util"
 	"github.com/Sn0wo2/OpenCloudflareCDN/log"
 	"github.com/Sn0wo2/OpenCloudflareCDN/response"
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-func Init(router fiber.Router, msg ...string) {
+func Handler(msg ...string) gin.HandlerFunc {
 	m := strings.Join(msg, " ")
 	if m = strings.ToLower(m); m == "" {
 		m = "page not found"
 	}
 
-	router.Use("*", func(ctx *fiber.Ctx) error {
+	return func(ctx *gin.Context) {
 		log.Instance.Warn("NF >> "+util.TitleCase(m),
-			zap.String("ctx", util.FiberContextString(ctx)))
+			zap.String("ctx", util.GinContextString(ctx)))
 
-		return response.New(m).Write(ctx, fiber.StatusNotFound)
-	})
+		response.New(m).Write(ctx, http.StatusNotFound)
+	}
 }

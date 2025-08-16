@@ -1,7 +1,9 @@
 package response
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Response struct {
@@ -18,7 +20,7 @@ func New(msg string, data ...any) *Response {
 	case 1:
 		return &Response{
 			Msg:  msg,
-			Data: data[0],
+			Data: data,
 		}
 	default:
 		return &Response{
@@ -28,10 +30,10 @@ func New(msg string, data ...any) *Response {
 	}
 }
 
-func (r *Response) Write(ctx *fiber.Ctx, status ...int) error {
+func (r *Response) Write(ctx *gin.Context, status ...int) {
+	s := http.StatusOK
 	if len(status) > 0 {
-		ctx.Status(status[0])
+		s = status[0]
 	}
-
-	return ctx.JSON(r)
+	ctx.JSON(s, r)
 }

@@ -5,14 +5,14 @@ import (
 
 	"github.com/Sn0wo2/OpenCloudflareCDN/internal/util"
 	"github.com/Sn0wo2/OpenCloudflareCDN/log"
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-func APIError() fiber.Handler {
-	return func(ctx *fiber.Ctx) error {
-		log.Instance.Info("E >> Error test", zap.String("ctx", util.FiberContextString(ctx)))
+func APIError() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		log.Instance.Info("E >> Error test", zap.String("ctx", util.GinContextString(ctx)))
 
-		return errors.New("test error")
+		_ = ctx.Error(errors.New("test error"))
 	}
 }
