@@ -35,5 +35,6 @@ func (r *Response) Write(ctx *gin.Context, status ...int) {
 	if len(status) > 0 {
 		s = status[0]
 	}
+
 	ctx.JSON(s, r)
 }

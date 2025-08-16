@@ -27,12 +27,14 @@ func Init(router *gin.Engine) {
 	}
 
 	router.NoRoute(func(ctx *gin.Context) {
-
 		proxy.Proxy()(ctx)
+
 		if ctx.Writer.Written() {
 			return
 		}
+
 		static.Handle()(ctx)
+
 		if ctx.Writer.Written() {
 			return
 		}

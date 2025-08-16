@@ -39,6 +39,7 @@ func GinContextString(ctx *gin.Context) string {
 			if len(v) > 20 {
 				v = v[:12] + "..."
 			}
+
 			headers = append(headers, fmt.Sprintf("%s:%s", key, v))
 		}
 	}

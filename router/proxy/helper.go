@@ -15,6 +15,7 @@ func Request(ctx *gin.Context) {
 	remote, err := url.Parse(config.Instance.OriginalServer)
 	if err != nil {
 		_ = ctx.Error(err)
+
 		return
 	}
 

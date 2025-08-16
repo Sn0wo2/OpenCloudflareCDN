@@ -13,14 +13,17 @@ func Handle() gin.HandlerFunc {
 			staticRoot := config.Instance.StaticPath
 			if staticRoot == "" {
 				ctx.Next()
+
 				return
 			}
 
 			filePath := GetStaticFile(config.Instance.StaticIndex, staticRoot, ctx.Request.URL.Path)
 			if filePath == "" {
 				ctx.Next()
+
 				return
 			}
+
 			ctx.File(filePath)
 			ctx.Abort()
 		}

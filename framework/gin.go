@@ -80,6 +80,7 @@ func Start(engine *gin.Engine) error {
 					HandshakeIdleTimeout: 10 * time.Second,
 				},
 			}
+
 			return h3Server.ListenAndServeTLS(config.Instance.Server.TLS.Cert, config.Instance.Server.TLS.Key)
 		})
 	} else {
