@@ -156,3 +156,4 @@ dist-ssr
 *.sw?
 
 /static/
+/data/
