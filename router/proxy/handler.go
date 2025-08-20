@@ -59,6 +59,7 @@ func Proxy() gin.HandlerFunc {
 		}
 
 		clientIP, ok1 := claims["ip"].(string)
+
 		userAgent, ok2 := claims["ua"].(string)
 		if !ok1 || !ok2 || clientIP != ctx.ClientIP() || userAgent != ctx.Request.UserAgent() {
 			log.Instance.Warn(
