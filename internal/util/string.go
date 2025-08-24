@@ -31,6 +31,8 @@ func GetStatusText(status int, msg ...string) string {
 	if len(msg) == 0 {
 		m = http.StatusText(status)
 	}
+
 	m = strings.ToLower(m)
+
 	return m
 }
