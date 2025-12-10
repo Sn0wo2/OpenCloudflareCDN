@@ -54,7 +54,7 @@ jobs:
 
       - name: Create Pull Request with lint fixes
         if: steps.git-check.outputs.changed == 'true' && github.ref == 'refs/heads/main'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "chore(frontend): fix lint issues & update dependencies"
           title: "chore(frontend): fix lint issues & update dependencies"
