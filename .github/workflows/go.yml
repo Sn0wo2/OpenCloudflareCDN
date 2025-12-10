@@ -49,7 +49,7 @@ jobs:
 
       - name: Create Pull Request with update dependencies
         if: steps.git-check.outputs.changed == 'true' && github.ref == 'refs/heads/main'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "chore(deps): update dependencies"
           title: "chore(deps): update dependencies"
@@ -92,7 +92,7 @@ jobs:
 
       - name: Create Pull Request with lint fixes
         if: steps.git-check.outputs.changed == 'true' && github.ref == 'refs/heads/main'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "chore(lint): fix issues"
           title: "chore(lint): fix issues"
