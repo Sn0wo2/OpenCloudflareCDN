@@ -27,7 +27,7 @@ func validate(cfg any) error {
 
 		var isEmpty bool
 
-		switch value.Kind() { //nolint:exhaustive
+		switch value.Kind() {
 		case reflect.String:
 			isEmpty = strings.TrimSpace(value.String()) == ""
 		case reflect.Int, reflect.Int64, reflect.Int32, reflect.Int16, reflect.Int8:
